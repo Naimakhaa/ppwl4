@@ -1,31 +1,38 @@
 import { Elysia, t } from "elysia";
 
 export const productPlugin = new Elysia({
-  prefix: "/products"
+  prefix: "/products",
 })
-.get(
-  "/:id",
-  ({ params }) => {
+  .onAfterHandle(({ response }) => {
     return {
       success: true,
       message: "data tersedia",
-      data: {
-        id: params.id,
-        name: "Laptop"
-      }
+      data: response,
     };
-  },
-  {
-    params: t.Object({
-      id: t.Number()
-    }),
-    response: t.Object({
-      success: t.Boolean(),
-      message: t.String(),
-      data: t.Object({
+  })
+
+  .get(
+    "/:id",
+    ({ params }) => {
+      return {
+        id: params.id,
+        name: "Laptop",
+      };
+    },
+    {
+      params: t.Object({
         id: t.Number(),
-        name: t.String()
-      })
-    })
-  }
-);
+      }),
+
+      response: {
+        200: t.Object({
+        success: t.Boolean(),
+        message: t.String(),
+        data: t.Object({
+          id: t.Number(),
+          name: t.String(),
+        }),
+      }),
+    }
+    }
+  );
