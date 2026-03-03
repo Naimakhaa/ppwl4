@@ -11,7 +11,6 @@ const app = new Elysia()
     };
   })
 
-  // 2. Endpoint GET /product
   .get("/product", () => {
     return { 
       id: 1, 
