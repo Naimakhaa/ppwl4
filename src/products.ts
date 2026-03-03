@@ -1,7 +1,8 @@
 import { Elysia, t} from "elysia";
 import { openapi } from "@elysiajs/openapi";
-const app = new Elysia()
 
+const app = new Elysia()
+.use(openapi())
 .get(
     "/products/:id",
     ({ params, query }) => {
@@ -23,6 +24,5 @@ const app = new Elysia()
     })
   }
 )
-.use(openapi())
 .listen(3000);
 console.log(`🦊 Elysia is running at http://${app.server?.hostname}:${app.server?.port}`);
